@@ -1,0 +1,34 @@
+<aura:component >
+     <aura:attribute name="tarea" type="Task"/>
+	<span class="slds-assistive-text">Meeting</span>
+<div class="slds-media slds-size--1-of-1">
+  <div class="slds-media__body">
+    <div class="slds-media slds-media--timeline slds-timeline__media--event">
+      <div class="slds-media__figure slds-timeline__icon">
+        <div class="slds-icon_container">
+          <lightning:icon iconName="standard:event" size="small"/>
+        </div>
+      </div>
+      <div class="slds-media__body">
+        <h3 class="slds-truncate" title="{!v.tarea.Subject}"><a onclick="{!c.navega}" id="{!v.tarea.Id}" >{!v.tarea.Subject}</a></h3>
+        <p class="slds-truncate" title="{!v.tarea.Description}">{!v.tarea.Description}</p>
+        <ul class="slds-list--horizontal slds-wrap">
+          <li class="slds-truncate_container--50 slds-m-right--large slds-grid">
+            <span class="slds-text-title">Name:&nbsp;</span>
+            <span class="slds-text-body--small slds-m-left--xx-small slds-truncate" title="{!v.tarea.Who.Name}"><a onclick="{!c.navega}" id="{!v.tarea.WhoId}" >{!v.tarea.Who.Name}</a></span>
+          </li>
+          <li class="slds-m-right--large">
+            <span class="slds-text-title">Location:&nbsp;</span>
+            <span class="slds-text-body--small"><a onclick="{!c.navega}" id="{!v.OwnerId}" ></a></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slds-media__figure slds-media__figure--reverse">
+    <div class="slds-timeline__actions">
+      <p class="slds-timeline__date"><ui:outputDate format="MMM dd" value="{!v.tarea.ActivityDate}"/></p>     
+    </div>
+  </div>
+</div>
+</aura:component>

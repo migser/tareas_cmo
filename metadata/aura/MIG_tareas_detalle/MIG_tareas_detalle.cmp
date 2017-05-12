@@ -1,0 +1,51 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" >
+	<aura:attribute name="caso" type="Case"/>
+    <aura:attribute name="abierto" type="Boolean" default="false" />
+    <lightning:layout verticalAlign="center" >
+        			<div onclick="{!c.show}" >
+        			<lightning:layoutitem padding="around-small">
+                        <lightning:icon iconName="{!v.abierto  ? 'utility:chevrondown ' : 'utility:chevronright '}" size="x-small"/>
+                    </lightning:layoutitem>
+        			</div>
+                    <lightning:layoutitem padding="around-small">
+                        <lightning:icon iconName="standard:case" size="small"/>
+                    </lightning:layoutitem>
+        			
+        			<lightning:layoutitem padding="around-small">
+                    <a onclick="{!c.navega}" id="{!v.caso.Id}" > 
+                                        {!v.caso.CaseNumber}	
+									</a>       
+                    </lightning:layoutitem>
+        <lightning:layoutitem padding="around-small">
+        <span class="slds-text-title">{!v.caso.Subject} ({!v.caso.Tasks == null ? 0 : v.caso.Tasks.length})</span>
+            </lightning:layoutitem>
+        <lightning:layoutitem padding="around-small">
+        <span class="slds-text-title">{!v.caso.Status}</span>
+            </lightning:layoutitem>
+        <lightning:layoutitem padding="around-small">
+            <p class="slds-text-title"><ui:outputDate value="{!v.caso.LastModifiedDate}"/></p>
+            </lightning:layoutitem>
+        			
+    </lightning:layout>
+    <aura:if isTrue="{!v.abierto}">       
+        <div class="slds-m-left--xx-large slds-p-left--medium" >
+    <aura:iteration items="{!v.caso.Tasks}" var="t">
+        <lightning:layout verticalAlign="center">
+            <aura:if isTrue="{!t.Type=='Call'}">  
+                <c:MIG_tarea_llamada tarea="{!t}"/>
+            </aura:if>
+            <aura:if isTrue="{!t.Type=='Email'}">  
+             	<c:MIG_tarea_email tarea="{!t}"/>
+            </aura:if>
+            <aura:if isTrue="{!t.Type=='Meeting'}">  
+            	<c:MIG_tarea_meeting tarea="{!t}"/>
+            </aura:if>
+            <aura:if isTrue="{!not(t.Type=='Meeting' || t.Type=='Call' || t.Type=='Email')}">  
+            	<c:MIG_tarea_otros tarea="{!t}"/>
+            </aura:if>
+       
+        </lightning:layout>
+    </aura:iteration>
+	</div>
+    </aura:if>
+</aura:component>
